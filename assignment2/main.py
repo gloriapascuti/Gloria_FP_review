@@ -3,8 +3,8 @@ import random
 
 def my_list(value: int) -> list:
     """
-    :param value: this will be the length that the user will be able to choose
-    :return: nothing, we will print the list
+    :param value: length of the list that will be generated
+    :return: a list of random integers of length value
     """
     random_list = []
     for i in range(value):
@@ -12,10 +12,10 @@ def my_list(value: int) -> list:
     return random_list
 
 
-def first_algorithm_cocktail_sort(array: list) -> list:
+def cocktail_sort(array: list) -> list:
     """
-    :param array: it will be given by my_list(number)
-    :return: it will return the sorted list
+    :param array: list to be sorted
+    :return: the sorted list
     """
     changed = True
     start = 0
@@ -35,39 +35,43 @@ def first_algorithm_cocktail_sort(array: list) -> list:
                 array[i], array[i+1] = array[i+1], array[i]
                 changed = True
         start += 1
-        return array
+    return array
 
-def second_algorithm_heap_sort(array: list) -> list:
+def heap_sort(array: list) -> list:
+    """
+    :param array: list to be sorted
+    :return: the sorted list
+    """
     def swap(array: list, i: int, j: int) -> None:
         array[i], array[j] = array[j], array[i]
 
-    def heapify(array: list, i: int, upper: int) -> None:
+    def heapify(array: list, start: int, end: int) -> None:
         """
-        :param array: it will be given by my_list(number)
-        :param i: aka the parent
-        :param upper: the upper bound of the list, it can be between 0 and len(array)
+        :param array: the list
+        :param start: aka the parent
+        :param end: the upper bound of the list, it can be between 0 and len(array)
         :return: nothing will be returned
         """
         while True:
-            left_child = 2*i + 1
-            right_child = 2*i + 2
-            if max(left_child, right_child) < upper:
-                if array[i] >= max(array[left_child], array[right_child]): break
+            left_child = 2 * start + 1
+            right_child = 2 * start + 2
+            if right_child < end:
+                if array[start] >= max(array[left_child], array[right_child]): break
                 elif array[left_child] > array[right_child]:
-                    swap(array, i, left_child)
-                    i = left_child
+                    swap(array, start, left_child)
+                    start = left_child
                 else:
-                    swap(array, i, right_child)
-                    i = right_child
-            elif left_child < upper:
-                if array[left_child] > array[i]:
-                    swap(array, i, left_child)
-                    i = left_child
+                    swap(array, start, right_child)
+                    start = right_child
+            elif left_child < end:
+                if array[left_child] > array[start]:
+                    swap(array, start, left_child)
+                    start = left_child
                 else: break
-            elif right_child < upper:
-                if array[right_child] > array[i]:
-                    swap(array, i, right_child)
-                    i = right_child
+            elif right_child < end:
+                if array[right_child] > array[start]:
+                    swap(array, start, right_child)
+                    start = right_child
                 else: break
             else: break
 
@@ -97,11 +101,11 @@ if __name__ == "__main__":
             value = my_list(number)
             print(value)
             print("Sorted list: ")
-            print(first_algorithm_cocktail_sort(value))
+            print(cocktail_sort(value))
 
         if problem == '3':
             print("The list is:")
             value = my_list(number)
             print(value)
             print("Sorted list:")
-            print(second_algorithm_heap_sort(value))
+            print(heap_sort(value))
