@@ -12,20 +12,25 @@ def my_list(value: int) -> list:
     return random_list
 
 
-def cocktail_sort(array: list) -> list:
+def cocktail_sort(array: list, step: int) -> list:
     """
     :param array: list to be sorted
+    :param step: the partially sorted list is displayed after step operation steps
     :return: the sorted list
     """
     changed = True
     start = 0
     end = len(array) - 1
+    iteration = 0
     while changed:
         changed = False
         for i in range(start, end):
             if array[i] > array[i+1]:
                 array[i], array[i+1] = array[i+1], array[i]
                 changed = True
+                if iteration % step == 0:
+                    print("Step", iteration, ":", array)
+                iteration += 1
         if not changed:
             break
         end -= 1
@@ -34,12 +39,16 @@ def cocktail_sort(array: list) -> list:
             if array[i] > array[i+1]:
                 array[i], array[i+1] = array[i+1], array[i]
                 changed = True
+                if iteration % step == 0:
+                    print("Step", iteration, ":", array)
+                iteration +=1
         start += 1
     return array
 
-def heap_sort(array: list) -> list:
+def heap_sort(array: list, step: int) -> list:
     """
     :param array: list to be sorted
+    :param step: the partially sorted list is displayed after step operation steps
     :return: the sorted list
     """
     def swap(array: list, i: int, j: int) -> None:
@@ -76,11 +85,18 @@ def heap_sort(array: list) -> list:
             else: break
 
 
+    iteration = 0
     for i in range((len(array)-2)//2, -1, -1):
+        if iteration % step == 0:
+            print("Step", iteration, ":", array)
         heapify(array, i, len(array))
+        iteration += 1
     for end in range(len(array)-1, 0, -1):
+        if iteration % step ==0:
+            print("Step", iteration, ":", array)
         swap(array, 0, end)
         heapify(array, 0, end)
+        iteration += 1
 
     return(array)
 
@@ -92,6 +108,7 @@ if __name__ == "__main__":
             break
 
         number = int(input("Enter a number: "))
+        step = int(input("After how many operation steps do you want to see the partially sorted list?"))
 
         if problem == '1':
             print(my_list(number))
@@ -101,11 +118,11 @@ if __name__ == "__main__":
             value = my_list(number)
             print(value)
             print("Sorted list: ")
-            print(cocktail_sort(value))
+            print(cocktail_sort(value, step))
 
         if problem == '3':
             print("The list is:")
             value = my_list(number)
             print(value)
             print("Sorted list:")
-            print(heap_sort(value))
+            print(heap_sort(value, step))
