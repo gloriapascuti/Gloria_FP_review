@@ -1,5 +1,5 @@
-
 import random
+import time
 
 def my_list(value: int) -> list:
     """
@@ -25,8 +25,8 @@ def cocktail_sort(array: list, step: int) -> list:
     while changed:
         changed = False
         for i in range(start, end):
-            if array[i] > array[i+1]:
-                array[i], array[i+1] = array[i+1], array[i]
+            if array[i] > array[i + 1]:
+                array[i], array[i + 1] = array[i + 1], array[i]
                 changed = True
                 if iteration % step == 0:
                     print("Step", iteration, ":", array)
@@ -36,14 +36,15 @@ def cocktail_sort(array: list, step: int) -> list:
         end -= 1
         changed = False
         for i in range(end, start - 1, -1):
-            if array[i] > array[i+1]:
-                array[i], array[i+1] = array[i+1], array[i]
+            if array[i] > array[i + 1]:
+                array[i], array[i + 1] = array[i + 1], array[i]
                 changed = True
                 if iteration % step == 0:
                     print("Step", iteration, ":", array)
-                iteration +=1
+                iteration += 1
         start += 1
     return array
+
 
 def heap_sort(array: list, step: int) -> list:
     """
@@ -51,6 +52,7 @@ def heap_sort(array: list, step: int) -> list:
     :param step: the partially sorted list is displayed after step operation steps
     :return: the sorted list
     """
+
     def swap(array: list, i: int, j: int) -> None:
         array[i], array[j] = array[j], array[i]
 
@@ -65,7 +67,8 @@ def heap_sort(array: list, step: int) -> list:
             left_child = 2 * start + 1
             right_child = 2 * start + 2
             if right_child < end:
-                if array[start] >= max(array[left_child], array[right_child]): break
+                if array[start] >= max(array[left_child], array[right_child]):
+                    break
                 elif array[left_child] > array[right_child]:
                     swap(array, start, left_child)
                     start = left_child
@@ -76,53 +79,58 @@ def heap_sort(array: list, step: int) -> list:
                 if array[left_child] > array[start]:
                     swap(array, start, left_child)
                     start = left_child
-                else: break
+                else:
+                    break
             elif right_child < end:
                 if array[right_child] > array[start]:
                     swap(array, start, right_child)
                     start = right_child
-                else: break
-            else: break
-
+                else:
+                    break
+            else:
+                break
 
     iteration = 0
-    for i in range((len(array)-2)//2, -1, -1):
+    for i in range((len(array) - 2) // 2, -1, -1):
         if iteration % step == 0:
             print("Step", iteration, ":", array)
         heapify(array, i, len(array))
         iteration += 1
-    for end in range(len(array)-1, 0, -1):
-        if iteration % step ==0:
+    for end in range(len(array) - 1, 0, -1):
+        if iteration % step == 0:
             print("Step", iteration, ":", array)
         swap(array, 0, end)
         heapify(array, 0, end)
         iteration += 1
 
-    return(array)
+    return (array)
 
 
 if __name__ == "__main__":
+    random_list = []
     while True:
         problem = input("Which problem do you want to run?(1/2/3 or 4/x, if you want to exit)")
         if problem == '4' or problem == 'x':
             break
 
-        number = int(input("Enter a number: "))
-        step = int(input("After how many operation steps do you want to see the partially sorted list?"))
-
         if problem == '1':
-            print(my_list(number))
+            number = int(input("Enter a number: "))
+            random_list = my_list(number)
+            print("The list is:")
+            print(random_list)
 
         if problem == '2':
             print("The list is: ")
-            value = my_list(number)
-            print(value)
+            print(random_list)
+            step = int(input("Choose the step:"))
+            sorted_list = cocktail_sort(random_list, step)
             print("Sorted list: ")
-            print(cocktail_sort(value, step))
+            print(sorted_list)
 
         if problem == '3':
-            print("The list is:")
-            value = my_list(number)
-            print(value)
+            print("The list is: ")
+            print(random_list)
+            step = int(input("Choose the step:"))
             print("Sorted list:")
-            print(heap_sort(value, step))
+            print(heap_sort(random_list, step))
+
