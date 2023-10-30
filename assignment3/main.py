@@ -15,7 +15,6 @@ def my_random_list(value: int) -> list:
 def cocktail_sort(array: list) -> list:
     """
     :param array: list to be sorted
-    :param step: the partially sorted list is displayed after step operation steps
     :return: the sorted list
     """
     changed = True
