@@ -8,3 +8,7 @@
 
 ## BACKTRACKING 
 ### Consider a positive number n. Determine all its decompositions as sums of prime numbers.
+
+## DYNAMIC PROGRAMMING
+### Given the set of positive integers S and the natural number k, display one of the subsets of S which sum to k. For example, if S = { 2, 3, 5, 7, 8 } and k = 14, subset { 2, 5, 7 } sums to 14.
+
