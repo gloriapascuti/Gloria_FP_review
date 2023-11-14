@@ -20,7 +20,7 @@ def create_number(string: str) -> list:
         if plus_index != -1:
             imaginary = float(string[plus_index+1:imaginary_index].strip())
         elif minus_index != -1:
-            imaginary = float(string[minus_index+1:imaginary_index].strip())
+            imaginary = float(string[minus_index+1:imaginary_index].strip()) * (-1)
     else:
         imaginary = 0
 
@@ -37,11 +37,12 @@ def print_complex(complex_list: list) -> str:
     for complex in complex_list:
         if complex == complex_list[-1]:
             result = result + str(convert_to_string(complex))
+            break
         result = result + str(convert_to_string(complex)) + ', '
     return result
 
 def convert_to_string(lst: list):
-    if lst[1] < 0:
+    if get_imaginary(lst) < 0:
         return f"{lst[0]} {lst[1]}i"
     return f"{lst[0]} + {lst[1]}i"
 
