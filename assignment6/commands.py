@@ -4,7 +4,7 @@ from functions import *
 def commands_for_add_number(list_to_append, the_input_command_string):
     lst = the_input_command_string.split()
     if lst[0] == "add":
-        add_number_to_list(list_to_append ,lst[1])
+        add_number_to_list(list_to_append, lst[1])
     elif lst[0] == "insert" and lst[2] == "at":
         complex_number = lst[1]
         position = int(lst[3])
@@ -13,19 +13,17 @@ def commands_for_add_number(list_to_append, the_input_command_string):
         raise ValueError("invalid command for adding an new number!")
 
 
-
-
 def commands_for_modify_number(list_to_append, the_input_command_string):
     lst = the_input_command_string.split()
     if len(lst) == 4:
         if lst[0] == "remove" and lst[2] == "to":
-                # start_position = int(lst[1].strip)
-                # end_position = int(lst[3].strip)
-                remove_the_numbers_at_given_start_to_end_position(list_to_append, int(lst[1]), int(lst[3]))
+            # start_position = int(lst[1].strip)
+            # end_position = int(lst[3].strip)
+            remove_the_numbers_at_given_start_to_end_position(list_to_append, int(lst[1]), int(lst[3]))
         elif lst[0] == "replace" and lst[2] == "with":
-                old_number = lst[1]
-                new_number = lst[3]
-                replace_all_numbers_equal_to_old_number_with_new_number(list_to_append, old_number, new_number)
+            old_number = lst[1]
+            new_number = lst[3]
+            replace_all_numbers_equal_to_old_number_with_new_number(list_to_append, old_number, new_number)
         else:
             raise ValueError("invalid command for modifying numbers!")
     elif len(lst) == 2:
@@ -38,8 +36,6 @@ def commands_for_modify_number(list_to_append, the_input_command_string):
         raise ValueError("invalid command for modifying numbers!")
     else:
         raise ValueError("invalid command for modifying numbers!")
-
-
 
 
 def commands_for_displaying_numbers_based_on_properties(list_to_display, the_input_command_string):
@@ -69,8 +65,6 @@ def commands_for_displaying_numbers_based_on_properties(list_to_display, the_inp
         raise ValueError("invalid command for displaying numbers based on properties!")
     else:
         raise ValueError("invalid command for displaying numbers based on properties!")
-
-
 
 
 def commands_for_filtering_the_list(list_to_keep, the_input_command_string):
@@ -111,6 +105,6 @@ if __name__ == "__main__":
         print(ve)
     # print(listt)
 
-# string = "      add       a+bi"
-# lst = string.split()
-# print(lst)
+    # string = "      add       a+bi"
+    # lst = string.split()
+    # print(lst)

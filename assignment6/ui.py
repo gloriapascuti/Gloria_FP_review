@@ -52,7 +52,8 @@ def main():
         elif command in commands:
             try:
                 commands[command](the_list, input_data)
-                add_to_list_of_steps_for_undo(the_list, list_of_steps_for_undo)
+                if command != "list":
+                    add_to_list_of_steps_for_undo(the_list, list_of_steps_for_undo)
             except ValueError as ve:
                 print(ve)
         else:

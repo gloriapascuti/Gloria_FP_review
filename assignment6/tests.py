@@ -1,6 +1,7 @@
 from functions import *
 from commands import *
 
+
 def test_insert_number_to_given_position():
     lst = [[1, 2], [2, 3], [3, 4]]
     try:
@@ -28,6 +29,7 @@ def test_remove_the_numbers_at_given_start_to_end_position():
         assert str(ve) == "invalid start position!\ninvalid end position!"
         # print(ve)
 
+
 def test_display_real_numbers_from_given_start_to_end_position():
     lst = [[1, 2], [2, 3], [3, 4]]
     try:
@@ -37,7 +39,6 @@ def test_display_real_numbers_from_given_start_to_end_position():
         assert str(ve) == "invalid start position!\ninvalid end position!"
 
 
-
 def test_commands_for_add_number():
     lst = [[1, 2], [2, 3], [3, 4]]
     try:
@@ -45,6 +46,7 @@ def test_commands_for_add_number():
         assert False
     except ValueError as ve:
         assert str(ve) == "invalid command for adding an new number!"
+
 
 def test_commands_for_modify_number():
     lst = [[1, 2], [2, 3], [3, 4]]
@@ -64,8 +66,6 @@ def test_commands_for_displaying_numbers_based_on_properties():
         assert str(ve) == "invalid command for displaying numbers based on properties!"
 
 
-
-
 def test_commands_for_filtering_the_list():
     lst = [[1, 2], [2, 3], [3, 4]]
     try:
@@ -75,11 +75,11 @@ def test_commands_for_filtering_the_list():
         assert str(ve) == "invalid command for filtering the list!"
 
 
-
 def test_add_to_list_of_steps_for_undo():
     lst = [[1, 2], [2, 3], [3, 4]]
     list_of_steps_for_undo = []
     add_to_list_of_steps_for_undo(lst, list_of_steps_for_undo)
+
 
 def test_move_to_previous_state_of_the_list():
     lst = [[1, 2], [2, 3], [3, 4]]
@@ -92,7 +92,7 @@ def add_to_list_of_steps_for_undo__the_list__the_list_at_last_position():
     the_list = initial_list()
     list_of_steps_for_undo = []
     add_to_list_of_steps_for_undo(the_list, list_of_steps_for_undo)
-    assert(list_of_steps_for_undo[len(list_of_steps_for_undo) - 1 ] == the_list)
+    assert (list_of_steps_for_undo[len(list_of_steps_for_undo) - 1] == the_list)
 
 
 def run_all_tests():
@@ -109,13 +109,12 @@ def run_all_tests():
     # add_to_list_of_steps_for_undo__the_list__the_list_at_last_position()
 
 
-
-run_all_tests()
-#
-listt = [[1, 2], [2, 0], [10, 0], [9, 9], [1, 2]]
-# add_number_to_list(listt, "2-3i")
-# print(display_real_numbers_from_given_start_to_end_position(listt, 0, 3))
-# print(listt)
-# print(keep_only_real_numbers(listt))
-# command = input(">>>")
-
+if "__name__" == "__main__":
+    run_all_tests()
+    #
+    listt = [[1, 2], [2, 0], [10, 0], [9, 9], [1, 2]]
+    # add_number_to_list(listt, "2-3i")
+    # print(display_real_numbers_from_given_start_to_end_position(listt, 0, 3))
+    # print(listt)
+    # print(keep_only_real_numbers(listt))
+    # command = input(">>>")
