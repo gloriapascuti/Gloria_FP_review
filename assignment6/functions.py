@@ -51,6 +51,8 @@ def get_real(complex):
 
 
 def get_imaginary(complex):
+    if len(complex) < 2:
+        return 0
     return complex[1]
 
 
@@ -219,7 +221,7 @@ def keep_only_real_numbers(list_of_complex):
         if get_imaginary(complex) == 0:
             filter_list.append(list_of_complex[index])
     list_of_complex = filter_list
-    return print_complex(list_of_complex)
+    return list_of_complex
 
 
 def keep_only_numbers_with_modulo_less_than_given_value(list_of_complex, value):
@@ -228,7 +230,7 @@ def keep_only_numbers_with_modulo_less_than_given_value(list_of_complex, value):
         if modulo_of_a_complex_number(complex) < value:
             filter_list.append(complex)
     list_of_complex = filter_list
-    return print_complex(list_of_complex)
+    return list_of_complex
 
 
 def keep_only_numbers_with_modulo_less_or_equal_than_given_value(list_of_complex, value):
@@ -237,7 +239,7 @@ def keep_only_numbers_with_modulo_less_or_equal_than_given_value(list_of_complex
         if modulo_of_a_complex_number(complex) <= value:
             filter_list.append(complex)
     list_of_complex = filter_list
-    return print_complex(list_of_complex)
+    return list_of_complex
 
 
 def keep_only_numbers_with_modulo_greater_than_given_value(list_of_complex, value):
@@ -246,7 +248,7 @@ def keep_only_numbers_with_modulo_greater_than_given_value(list_of_complex, valu
         if modulo_of_a_complex_number(complex) > value:
             filter_list.append(complex)
     list_of_complex = filter_list
-    return print_complex(list_of_complex)
+    return list_of_complex
 
 
 def keep_only_numbers_with_modulo_greater_or_equal_than_given_value(list_of_complex, value):
@@ -255,7 +257,7 @@ def keep_only_numbers_with_modulo_greater_or_equal_than_given_value(list_of_comp
         if modulo_of_a_complex_number(complex) >= value:
             filter_list.append(complex)
     list_of_complex = filter_list
-    return print_complex(list_of_complex)
+    return list_of_complex
 
 
 def keep_only_numbers_with_modulo_equal_to_given_value(list_of_complex, value):
@@ -264,7 +266,7 @@ def keep_only_numbers_with_modulo_equal_to_given_value(list_of_complex, value):
         if modulo_of_a_complex_number(complex) == value:
             filter_list.append(complex)
     list_of_complex = filter_list
-    return print_complex(list_of_complex)
+    return list_of_complex
 
 
 # E -- UNDO

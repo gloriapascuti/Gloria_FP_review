@@ -69,19 +69,20 @@ def commands_for_displaying_numbers_based_on_properties(list_to_display, the_inp
 
 def commands_for_filtering_the_list(list_to_keep, the_input_command_string):
     lst = the_input_command_string.split()
+    filtered_list = []
     if len(lst) == 2 and lst[0] == "filter" and lst[1] == "real":
-        print(keep_only_real_numbers(list_to_keep))
+        filtered_list = keep_only_real_numbers(list_to_keep)
     elif len(lst) == 4 and lst[0] == "filter" and lst[1] == "modulo":
         if lst[2] == "<":
-            print(keep_only_numbers_with_modulo_less_than_given_value(list_to_keep, int(lst[3])))
+            filtered_list = keep_only_numbers_with_modulo_less_than_given_value(list_to_keep, int(lst[3]))
         elif lst[2] == "<=":
-            print(keep_only_numbers_with_modulo_less_or_equal_than_given_value(list_to_keep, int(lst[3])))
+            filtered_list = keep_only_numbers_with_modulo_less_or_equal_than_given_value(list_to_keep, int(lst[3]))
         elif lst[2] == ">":
-            print(keep_only_numbers_with_modulo_greater_than_given_value(list_to_keep, int(lst[3])))
+            filtered_list = keep_only_numbers_with_modulo_greater_than_given_value(list_to_keep, int(lst[3]))
         elif lst[2] == ">=":
-            print(keep_only_numbers_with_modulo_greater_or_equal_than_given_value(list_to_keep, int(lst[3])))
+            filtered_list = keep_only_numbers_with_modulo_greater_or_equal_than_given_value(list_to_keep, int(lst[3]))
         elif lst[2] == "=":
-            print(keep_only_numbers_with_modulo_equal_to_given_value(list_to_keep, int(lst[3])))
+            filtered_list = keep_only_numbers_with_modulo_equal_to_given_value(list_to_keep, int(lst[3]))
         else:
             raise ValueError("invalid command for filtering the list!")
     elif len(lst) == 0:
@@ -89,9 +90,15 @@ def commands_for_filtering_the_list(list_to_keep, the_input_command_string):
     else:
         raise ValueError("invalid command for filtering the list!")
 
+    list_to_keep.clear()
+    print(print_complex(filtered_list))
+    for index in range(0, len(filtered_list)):
+        set_new_number(list_to_keep, get_real(get_element(filtered_list, index)),
+                       get_imaginary(get_element(filtered_list, index)))
+
 
 def undo_command(the_list, list_of_steps_for_undo):
-    if len(list_of_steps_for_undo) == 0:
+    if len(list_of_steps_for_undo) == 1:
         raise ValueError("There are no commands to undo!")
     undo(the_list, list_of_steps_for_undo)
 
