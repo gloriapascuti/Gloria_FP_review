@@ -1,0 +1,10 @@
+1,10,water
+15,150,phone
+3,30,electricity
+14,140,gas
+10,100,gas
+28,280,water
+13,130,water
+9,90,phone
+18,180,phone
+16,160,WI-FI

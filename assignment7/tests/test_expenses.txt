@@ -1,0 +1,11 @@
+23,230,phone
+10,100,phone
+13,130,phone
+12,120,electricity
+20,200,electricity
+3,30,water
+2,20,WI-FI
+25,250,gas
+21,210,WI-FI
+12,120,gas
+1,10,apa

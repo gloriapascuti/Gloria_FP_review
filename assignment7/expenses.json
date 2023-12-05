@@ -1,0 +1,52 @@
+[
+  {
+    "day": 1,
+    "amount_of_money": 10,
+    "type": "water"
+  },
+  {
+    "day": 15,
+    "amount_of_money": 150,
+    "type": "phone"
+  },
+  {
+    "day": 3,
+    "amount_of_money": 30,
+    "type": "electricity"
+  },
+  {
+    "day": 14,
+    "amount_of_money": 140,
+    "type": "gas"
+  },
+  {
+    "day": 10,
+    "amount_of_money": 100,
+    "type": "gas"
+  },
+  {
+    "day": 28,
+    "amount_of_money": 280,
+    "type": "water"
+  },
+  {
+    "day": 13,
+    "amount_of_money": 130,
+    "type": "water"
+  },
+  {
+    "day": 9,
+    "amount_of_money": 90,
+    "type": "phone"
+  },
+  {
+    "day": 18,
+    "amount_of_money": 180,
+    "type": "phone"
+  },
+  {
+    "day": 16,
+    "amount_of_money": 160,
+    "type": "WI-FI"
+  }
+]
