@@ -2,6 +2,7 @@ import copy
 import random
 
 from domain.model import Student, Discipline, Grade
+from errors.exceptions import ValidError
 
 
 def initial_students_list() -> [Student]:
@@ -70,7 +71,7 @@ class StudentRepository(Repository):
 
     def create(self, student):
         if student in self.students:
-            raise ValueError("already existing student with same id!")
+            raise ValidError("already existing student with same id!")
         self.students.append(student)
 
     def retrieve(self):
@@ -83,7 +84,7 @@ class StudentRepository(Repository):
                 stud_index = index
                 break
         if stud_index is None:
-            raise ValueError("student not found!")
+            raise ValidError("student not found!")
         self.students[stud_index] = updated_student
 
     def delete(self, removed_student_id):
@@ -97,7 +98,7 @@ class StudentRepository(Repository):
         # self.students.pop(stud_index)
         student = self.get_by_id(removed_student_id)
         if student is None:
-            raise ValueError("student not found!")
+            raise ValidError("student not found!")
         self.students.remove(student)
 
     def get_by_id(self, id: int):
@@ -107,7 +108,7 @@ class StudentRepository(Repository):
                 student = stud
                 break
         if student is None:
-            raise ValueError("student id not found!")
+            raise ValidError("student id not found!")
         return student
 
     def get_by_name(self, name: str):
@@ -117,7 +118,7 @@ class StudentRepository(Repository):
             if to_cmp.lower() == name.lower() and to_cmp.upper() == name.upper():
                 students.append(stud)
         if not students:
-            raise ValueError("student name not found!")
+            raise ValidError("student name not found!")
         return students
 
 
@@ -133,7 +134,7 @@ class DisciplineRepository(Repository):
 
     def create(self, discipline):
         if discipline in self.disciplines:
-            raise ValueError("already existing discipline!")
+            raise ValidError("already existing discipline!")
         self.disciplines.append(discipline)
 
     def retrieve(self):
@@ -146,13 +147,13 @@ class DisciplineRepository(Repository):
                 discip_index = index
                 break
         if discip_index is None:
-            raise ValueError("discipline not found!")
+            raise ValidError("discipline not found!")
         self.disciplines[discip_index] = updated_discipline
 
     def delete(self, removed_discipline_id):
         discipline = self.get_by_id(removed_discipline_id)
         if discipline is None:
-            raise ValueError("student not found!")
+            raise ValidError("student not found!")
         self.disciplines.remove(discipline)
 
 
@@ -163,17 +164,17 @@ class DisciplineRepository(Repository):
                 discipline = discip
                 break
         if discipline is None:
-            raise ValueError("discipline id not found!")
+            raise ValidError("discipline id not found!")
         return discipline
 
     def get_by_name(self, name: str):
         disciplines = []
         for discip in self.disciplines:
-            to_cmp = discip.get_name()
-            if to_cmp.lower() == name.lower() and to_cmp.upper() == name.upper():
+            name_cmp = discip.get_name()
+            if name_cmp.lower() == name.lower() and name_cmp.upper() == name.upper():
                 disciplines.append(discip)
         if not disciplines:
-            raise ValueError("discipline name not found!")
+            raise ValidError("discipline name not found!")
         return disciplines
 
 
@@ -231,11 +232,11 @@ if __name__ == "__main__":
         repod.create(Discipline(23, "Math"))
         print(repod.retrieve(), '\n')
         # repoo.get_student_by_id()
-        repog = GradeRepository(repo, repod)
-        grades = repog.retrieve()
+        # repog = GradeRepository(repo, repod)
+        # grades = repog.retrieve()
         # print(grades, '\n')
-        repog.create(Grade(23, 23, 9.5))
-        print(repog.retrieve())
+        # repog.create(Grade(23, 23, 9.5))
+        # print(repog.retrieve())
         print(repo.get_by_id(23), '\n')
         print(repo.get_by_name("jane"))
         # repo.delete(Student(23, "John"))
@@ -245,5 +246,5 @@ if __name__ == "__main__":
         print(repod.get_by_id(23))
         print(repod.get_by_name("Math"))
 
-    except ValueError as ve:
+    except ValidError as ve:
         print(ve)

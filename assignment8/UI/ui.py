@@ -1,3 +1,4 @@
+from errors.exceptions import ValidError
 from services.service import Service
 
 
@@ -215,7 +216,7 @@ class UI:
                     break
                 else:
                     print("invalid input!")
-            except ValueError as ve:
+            except ValidError as ve:
                 print(ve)
 
 

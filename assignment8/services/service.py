@@ -3,6 +3,7 @@ import statistics
 
 import repository.repo
 from domain.model import Student, Discipline, Grade
+from errors.exceptions import ValidError
 from repository.repo import Repository, StudentRepository, DisciplineRepository, GradeRepository
 from services.validate import ValidationService
 
@@ -68,9 +69,9 @@ class Service:
           students = self.retrieve_students()
           disciplines = self.retrieve_disciplines()
           if student not in students:
-               raise ValueError("student not found!")
+               raise ValidError("student not found!")
           if discipline not in disciplines:
-               raise ValueError("discipline not found!")
+               raise ValidError("discipline not found!")
           grade = Grade(discipline_id, student_id, grade_value)
           self.validator.validate_grade(grade)
           self.repo_grade.create(grade)

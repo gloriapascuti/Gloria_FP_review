@@ -1,4 +1,5 @@
 from domain.model import Student, Discipline, Grade
+from errors.exceptions import ValidError
 
 
 class ValidationService:
@@ -10,7 +11,7 @@ class ValidationService:
         if len(student.get_name()) < 2:
             errors += "invalid student name!\n"
         if len(errors) > 0:
-            raise ValueError(errors)
+            raise ValidError(errors)
 
     def validate_discipline(self, discipline: Discipline):
         errors = ""
@@ -19,7 +20,7 @@ class ValidationService:
         if len(discipline.get_name()) < 2:
             errors += "invalid discipline name!\n"
         if len(errors) > 0:
-            raise ValueError(errors)
+            raise ValidError(errors)
 
     def validate_grade(self, grade: Grade):
         errors = ""
@@ -30,7 +31,7 @@ class ValidationService:
         if grade.get_grade_value() < 1 or grade.get_grade_value() > 10:
             errors += "invalid grade value!\n"
         if len(errors) > 0:
-            raise ValueError(errors)
+            raise ValidError(errors)
 
 
 if __name__ == "__main__":
@@ -42,5 +43,5 @@ if __name__ == "__main__":
         validation_service.validate_student(student)
         validation_service.validate_discipline(discipline)
         validation_service.validate_grade(grade)
-    except ValueError as ve:
+    except ValidError as ve:
         print(ve)

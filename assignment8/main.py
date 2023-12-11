@@ -1,4 +1,5 @@
 from UI.ui import UI
+from domain.model import Student, Grade
 from repository.repo import Repository, StudentRepository, DisciplineRepository, GradeRepository
 from services.service import Service
 from services.validate import ValidationService
@@ -15,4 +16,6 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    # main()
+    student = Grade(501, 502, 10)
+    print(len(str(student)))

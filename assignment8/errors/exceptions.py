@@ -1,0 +1,3 @@
+class ValidError(ValueError):
+
+    pass
