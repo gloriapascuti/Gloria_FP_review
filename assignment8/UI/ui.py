@@ -27,9 +27,8 @@ class UI:
 
         else:
             for student in students:
-                print(f"({student}) ", end="")
+                print(f"({student}) ", end="\n")
             print()
-
 
     def list_disciplines(self):
         disciplines = self.service.retrieve_disciplines()
@@ -38,7 +37,7 @@ class UI:
             print("no disciplines found!")
         else:
             for discipline in disciplines:
-                print(f"({discipline}) ", end="")
+                print(f"({discipline}) ", end="\n")
             print()
 
     def list_grades(self):
@@ -48,7 +47,7 @@ class UI:
             print("no grades found!")
         else:
             for grade in grades:
-                print(f"({grade}) ", end="")
+                print(f"({grade}) ", end="\n")
             print()
 
     def update_student(self):
@@ -92,17 +91,25 @@ class UI:
         print("Enter the name by which you want to search: ")
         name = input("- give the discipline's name: ")
         print(self.service.get_discipline_by_name(name))
+
     def create_grade(self):
         print("Add a new grade:")
         discipline_id = int(input("Enter the discipline's id: "))
         student_id = int(input("Enter the student's id: "))
         grade_value = float(input("Enter the value of the grade: "))
-        self.service.create_grade(discipline_id,student_id, grade_value)
+        self.service.create_grade(discipline_id, student_id, grade_value)
 
     def failing_students(self):
-        print(f"List of failing students: {self.service.failing_students()}")
+        for student in self.service.failing_students():
+            print(student)
 
+    def best_students(self):
+        for stud in self.service.desc_stud():
+            print(stud)
 
+    def best_disciplines(self):
+        for discipline in self.service.desc_disciplines():
+            print(discipline)
 
     def run(self):
         print("Students Register Management:\n"
@@ -179,7 +186,8 @@ class UI:
                         self.list_grades()
                     elif choice == "add" or choice == "a":
                         self.create_grade()
-                    else: print("invalid input!")
+                    else:
+                        print("invalid input!")
                 elif option == "3":
                     choice = input("students or disciplines? ")
                     choice = choice.strip()
@@ -190,7 +198,8 @@ class UI:
                             self.get_student_by_id()
                         elif o == "n":
                             self.get_student_by_name()
-                        else: print("invalid choice!")
+                        else:
+                            print("invalid choice!")
                     elif choice == "d":
                         o = input("ID or name?")
                         o = o.strip()
@@ -200,25 +209,23 @@ class UI:
                             self.get_discipline_by_name()
                         else:
                             print("invalid choice!")
-                    else: print("invalid choice!")
+                    else:
+                        print("invalid choice!")
                 elif option == "4":
                     choice = input("what do you want to do:")
                     choice = choice.strip()
                     if choice == "fail" or choice == "f":
                         self.failing_students()
                     elif choice == "best" or choice == "b":
-                        pass
+                        self.best_students()
                     elif choice == "all" or choice == "a":
-                        pass
-                    else: print("invalid choice!")
+                        self.best_disciplines()
+                    else:
+                        print("invalid choice!")
                 elif option == "5" or option == "x":
                     print("goodbye!")
                     break
                 else:
                     print("invalid input!")
-            except ValidError as ve:
+            except ValueError as ve:
                 print(ve)
-
-
-
-

@@ -18,6 +18,7 @@ def initial_students_list() -> [Student]:
                 break
     return students
 
+
 def initial_disciplines_list() -> [Discipline]:
     disciplines = []
     for _ in range(21):
@@ -30,9 +31,6 @@ def initial_disciplines_list() -> [Discipline]:
                 disciplines.append(discipline)
                 break
     return disciplines
-
-
-
 
 
 class Repository:
@@ -64,10 +62,12 @@ class Repository:
 
 class StudentRepository(Repository):
 
-
-    def __init__(self):
+    def __init__(self, default_students=None):
         super().__init__()
-        self.students: [Student] = initial_students_list()
+        if default_students is None:
+            self.students: [Student] = initial_students_list()
+        else:
+            self.students = default_students[:]
 
     def create(self, student):
         if student in self.students:
@@ -122,15 +122,14 @@ class StudentRepository(Repository):
         return students
 
 
-
-
-
-
 class DisciplineRepository(Repository):
 
-    def __init__(self):
+    def __init__(self, default_disciplines=None):
         super().__init__()
-        self.disciplines = initial_disciplines_list()
+        if default_disciplines is None:
+            self.disciplines: [Discipline] = initial_disciplines_list()
+        else:
+            self.disciplines = default_disciplines[:]
 
     def create(self, discipline):
         if discipline in self.disciplines:
@@ -156,7 +155,6 @@ class DisciplineRepository(Repository):
             raise ValidError("student not found!")
         self.disciplines.remove(discipline)
 
-
     def get_by_id(self, id):
         discipline = None
         for discip in self.disciplines:
@@ -178,23 +176,23 @@ class DisciplineRepository(Repository):
         return disciplines
 
 
-
 class GradeRepository(Repository):
 
-    def __init__(self):
+    def __init__(self, default_grades=None):
         super().__init__()
-        self.grades = []
+        if default_grades is not None:
+            self.grades = default_grades[:]
+        else:
+            self.grades = []
 
     def initial_grades_list(self, disciplines, students) -> [Grade]:
         for j in range(21):
-            while True:
-                discipline_id = disciplines[j].get_discipline_id()
+            for _ in range(3):
+                discipline_id = disciplines[random.randint(1, 20)].get_discipline_id()
                 student_id = students[j].get_student_id()
                 value_grade = random.randint(1, 10)
                 grade = Grade(discipline_id, student_id, value_grade)
-                # if grade not in self.grades:
                 self.grades.append(grade)
-                    # break
 
     def create(self, grade: Grade):
         # if self.student.get_by_id(student_id) not in self.students:
@@ -207,8 +205,12 @@ class GradeRepository(Repository):
         return copy.deepcopy(self.grades)
 
     def get_grades_for_student_at_discipline(self, student_id, discipline_id):
-        return list(filter(lambda grade: grade.get_student_id() == student_id and grade.get_discipline_id() == discipline_id, self.grades))
+        return list(
+            filter(lambda grade: grade.get_student_id() == student_id and grade.get_discipline_id() == discipline_id,
+                   self.grades))
 
+    def get_grades_for_discipline(self, discipline_id):
+        return list(filter(lambda grade: grade.get_discipline_id() == discipline_id, self.grades))
 
 
 if __name__ == "__main__":

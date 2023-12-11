@@ -48,7 +48,7 @@ class Discipline:
 
 class Grade:
 
-    def __init__(self,  discipline_id: int, student_id: int, grade_value: float):
+    def __init__(self, discipline_id: int, student_id: int, grade_value: float):
         self.discipline_id = discipline_id
         self.student_id = student_id
         self.grade_value = grade_value
