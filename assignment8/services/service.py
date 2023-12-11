@@ -116,14 +116,16 @@ class Service:
                     average += grade.get_grade_value()
           return average // counter
 
-     def failing_students(self):
-          failing = []
-          students = self.repo_student.retrieve()
-          for student in students:
-               if self.get_average(student.get_student_id()) < 5:
-                    if student not in failing:
-                         failing.append(student)
-          return failing
+     # def failing_students(self):
+     #      failing = []
+     #      students = self.repo_student.retrieve()
+     #      student_failing_pair = []
+     #      pairs = self.get_student_discipline_average_pairs()
+     #      for student in students:
+     #           if self.get_average(student.get_student_id()) < 5:
+     #                if student not in failing:
+     #                     failing.append(student)
+     #      return failing
 
      def get_student_discipline_average_pairs(self):
           pairs = []
@@ -145,49 +147,30 @@ class Service:
                student_average_pair.append([student, overall_average])
           return sorted(student_average_pair, key=lambda pair: pair[1], reverse=True)
 
+     def failing_students(self, student_id):
+          student_failing_pair = []
+          pairs = self.get_student_discipline_average_pairs()
+          for student in self.repo_student.retrieve():
+               student_failing = filter(lambda pair: pair[0] == student, pairs)
+               overall_failing = statistics.mean(map(lambda pair: pair[2] < 5, student_failing))
+               if student not in student_failing:
+                    student_failing_pair.append([student, overall_failing])
+          return student_failing_pair
 
+     def desc_discip(self, discipline_id):
+          discipline_pair = []
+          pairs = self.get_student_discipline_average_pairs()
+          for discipline in self.repo_discipline.retrieve():
+               discipline_average = filter(lambda pair: pair[1] == discipline, pairs)
+               discipline_average = statistics.mean(map(lambda pair: pair[1], discipline_average))
+               if discipline not in discipline_pair:
+                    discipline_pair.append([discipline, discipline_average])
+          return discipline_pair
 
      def sort_disciplines(self):
           grades = self.repo_grade.retrieve()
           disciplines = self.repo_discipline.retrieve()
           max_grade = -1
-
-
-
-
-
-
-
-
-
-
-          for discipline in disciplines:
-               for grade in grades:
-                    if grade.get_discipline_id() == discipline.get_discipline_id():
-                        if grade.get_grade_value() > max_grade:
-                              max_grade = grade.get_grade_value()
-
-
-
-
-
-
-
-
-
-
-
-
-          grades = self.repo_grade.retrieve()
-          disciplines = self.repo_discipline.retrieve()
-          new_list = [[]]
-          sorted_list = [[]]
-          for grade in grades:
-               if grade.get_grade_value() != 0:
-                    if grade.get_discipline_id() not in new_list[0]:
-                         new_list.append([self.get_discipline_by_id(grade.get_discipline_id()), grade.get_grade_value()])
-          sorted_list = sorted(new_list, key = lambda grade: grade.get_discipline_id(), reverse = True)
-          return sorted_list
 
 
 def pretty_print(lista):

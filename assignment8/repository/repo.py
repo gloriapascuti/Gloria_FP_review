@@ -185,15 +185,15 @@ class GradeRepository(Repository):
         self.grades = []
 
     def initial_grades_list(self, disciplines, students) -> [Grade]:
-        for i in range(21):
+        for j in range(21):
             while True:
-                discipline_id = disciplines[i].get_discipline_id()
-                student_id = students[i].get_student_id()
+                discipline_id = disciplines[j].get_discipline_id()
+                student_id = students[j].get_student_id()
                 value_grade = random.randint(1, 10)
                 grade = Grade(discipline_id, student_id, value_grade)
-                if grade not in self.grades:
-                    self.grades.append(grade)
-                    break
+                # if grade not in self.grades:
+                self.grades.append(grade)
+                    # break
 
     def create(self, grade: Grade):
         # if self.student.get_by_id(student_id) not in self.students:
