@@ -96,7 +96,7 @@ class StudentRepository(Repository):
         - it will first check if the student is already existing, if not a new student will be added
         :param student: a student of type Student
         :return: -
-        :raises: ValidError as string: - "already existing student with same id!", if the value is already existing
+        :raises: ValidError as string: - "already existing student with same id!", if the student is already existing
         """
         if student in self.students:
             raise ValidError("already existing student with same id!")
@@ -105,7 +105,6 @@ class StudentRepository(Repository):
     def retrieve(self):
         """
         the function defined in the Repository class, we have overridden it here especially for the StudentRepository class
-        :param student: a student of type Student
         :return: a deepcopy of the lists of students
         """
         return copy.deepcopy(self.students)
@@ -113,9 +112,12 @@ class StudentRepository(Repository):
     def update(self, updated_student):
         """
         the function defined in the Repository class, we have overridden it here especially for the StudentRepository class
-        - first we find the index on with updated student is
+        - first we find the index on which updated student is situated
+        - after finding it, it will be used to update the name of the student by setting the whole student at that index with the updated_student
+        - if the index remains none, we will catch that with ValidError and a specific message
         :param updated_student: a student of type Student, with the ID and new name
-        :return: a deepcopy of the lists of students
+        :return: -
+        :raises: ValidError as a string: -"student not found!", if it doesn't find student with the same ID
         """
         stud_index = None
         for index, stud in enumerate(self.students):
@@ -127,6 +129,15 @@ class StudentRepository(Repository):
         self.students[stud_index] = updated_student
 
     def delete(self, removed_student_id):
+        """
+        the function defined in the Repository class, we have overridden it here especially for the StudentRepository class
+        - it will first check if there exists a student with that ID
+        - if it does, the student will be deleted
+        - if it doesn't, we will catch that with ValidError, and a specific message
+        :param removed_student_id: a student's ID
+        :return: -
+        :raises: ValidError as string: - "student not found!", if it doesn't find student with the same ID
+        """
         # stud_index = None
         # for index, stud in enumerate(self.students):
         #     if stud.get_student_id() == removed_student_id:
@@ -171,14 +182,34 @@ class DisciplineRepository(Repository):
             self.disciplines = default_disciplines[:]
 
     def create(self, discipline):
+        """
+        the function defined in the Repository class, we have overridden it here especially for the DisciplineRepository class
+        - it will first check if the discipline is already existing, if not a new discipline will be added
+        :param discipline: a discipline of type Discipline
+        :return: -
+        :raises: ValidError as string: - "already existing discipline with same id!", if the discipline is already existing
+        """
         if discipline in self.disciplines:
-            raise ValidError("already existing discipline!")
+            raise ValidError("already existing discipline with the same id!")
         self.disciplines.append(discipline)
 
     def retrieve(self):
+        """
+        the function defined in the Repository class, we have overridden it here especially for the DisciplineRepository class
+        :return: a deepcopy of the lists of disciplines
+        """
         return copy.deepcopy(self.disciplines)
 
     def update(self, updated_discipline):
+        """
+        the function defined in the Repository class, we have overridden it here especially for the DisciplineRepository class
+        - first we find the index on which updated discipline is situated
+        - after finding it, it will be used to update the name of the discipline by setting the whole discipline at that index with the updated_discipline
+        - if the index remains none, we will catch that with ValidError and a specific message
+        :param updated_discipline: a discipline of type Discipline, with the ID and new name
+        :return: -
+        :raises: ValidError as a string: -"discipline not found!", if it doesn't find discipline with the same ID
+        """
         discip_index = None
         for index, discip in enumerate(self.disciplines):
             if discip == updated_discipline:
@@ -189,9 +220,18 @@ class DisciplineRepository(Repository):
         self.disciplines[discip_index] = updated_discipline
 
     def delete(self, removed_discipline_id):
+        """
+        the function defined in the Repository class, we have overridden it here especially for the DisciplineRepository class
+        - it will first check if there exists a discipline with that ID
+        - if it does, the discipline will be deleted
+        - if it doesn't, we will catch that with ValidError, and a specific message
+        :param removed_discipline_id: a student's ID
+        :return: -
+        :raises: ValidError as string: - "discipline not found!", if it doesn't find discipline with the same ID
+        """
         discipline = self.get_by_id(removed_discipline_id)
         if discipline is None:
-            raise ValidError("student not found!")
+            raise ValidError("discipline not found!")
         self.disciplines.remove(discipline)
 
     def get_by_id(self, id):

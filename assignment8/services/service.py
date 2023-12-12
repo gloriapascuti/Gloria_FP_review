@@ -18,34 +18,76 @@ class Service:
             self.repo_grade.initial_grades_list(self.repo_discipline.retrieve(), self.repo_student.retrieve())
 
     def create_student(self, id, name):
+        """
+        function that adds to the list a new student, after validating it. The create_student function from Service is "talking" to the create function from StudentRepository.
+        :param id: the id as an integer
+        :param name: the name as a string
+        :return: -
+        """
         student = Student(id, name)
         self.validator.validate_student(student)
         self.repo_student.create(student)
 
     def create_discipline(self, id, name):
+        """
+        function that adds to the list a new discipline, after validating it. The create_discipline function from Service is "talking" to the create function from DisciplineRepository.
+        :param id: the id as an integer
+        :param name: the name as a string
+        :return: -
+        """
         discipline = Discipline(id, name)
         self.validator.validate_discipline(discipline)
         self.repo_discipline.create(discipline)
 
     def retrieve_students(self):
+        """
+        function that returns the list of students. The retrieve_students function from Service is "talking" to the retrieve function from StudentRepository.
+        :return: the list of students
+        """
         return self.repo_student.retrieve()
 
     def retrieve_disciplines(self):
+        """
+        function that returns the list of disciplines. The retrieve_disciplines function from Service is "talking" to the retrieve function from DisciplineRepository.
+        :return: the list of disciplines
+        """
         return self.repo_discipline.retrieve()
 
     def update_student(self, id, name):
+        """
+        function that updates a students name. The update_student function from Service is "talking" to the update function from StudentRepository.
+        :param id: the id as an integer
+        :param name: the name as a string
+        :return: -
+        """
         student = Student(id, name)
         self.repo_student.update(student)
 
     def update_discipline(self, id, name):
+        """
+        function that updates a disciplines name. The update_discipline function from Service is "talking" to the update function from DisciplineRepository.
+        :param id: the id as an integer
+        :param name: the name as a string
+        :return: -
+        """
         discipline = Discipline(id, name)
         self.repo_discipline.update(discipline)
 
     def delete_student(self, id):
+        """
+        function that deletes the student with the same ID. The delete_student function from Service is "talking" to the delete function from StudentRepository.
+        :param id: the id as an integer
+        :return: -
+        """
         self.repo_student.delete(id)
         self.delete_grades_if_student_deleted(id)
 
     def delete_discipline(self, id):
+        """
+        function that deletes the discipline with the same ID. The delete_discipline function from Service is "talking" to the delete function from DisciplineRepository.
+        :param id: the id as an integer
+        :return: -
+        """
         self.repo_discipline.delete(id)
         self.delete_grades_if_discipline_deleted(id)
 
