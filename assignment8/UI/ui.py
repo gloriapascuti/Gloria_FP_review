@@ -107,7 +107,7 @@ class UI:
         for stud in self.service.desc_stud():
             print(stud)
 
-    def best_disciplines(self):
+    def all_disciplines(self):
         for discipline in self.service.desc_disciplines():
             print(discipline)
 
@@ -132,7 +132,7 @@ class UI:
               "4. See statistics:\n"
               "~ fail: students failing\n"
               "~ best: students with the best school situation\n"
-              "~ all: all disciplines with grades, sorted in descending order based on average\n"
+              "~ disc: all disciplines with grades, sorted in descending order based on average\n"
               "5. Exit")
         while True:
             try:
@@ -218,8 +218,8 @@ class UI:
                         self.failing_students()
                     elif choice == "best" or choice == "b":
                         self.best_students()
-                    elif choice == "all" or choice == "a":
-                        self.best_disciplines()
+                    elif choice == "disc" or choice == "d":
+                        self.all_disciplines()
                     else:
                         print("invalid choice!")
                 elif option == "5" or option == "x":
@@ -227,5 +227,5 @@ class UI:
                     break
                 else:
                     print("invalid input!")
-            except ValueError as ve:
+            except ValidError as ve:
                 print(ve)

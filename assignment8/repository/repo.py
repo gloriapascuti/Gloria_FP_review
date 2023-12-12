@@ -35,19 +35,40 @@ def initial_disciplines_list() -> [Discipline]:
 
 class Repository:
 
+
     def __init__(self):
         pass
 
     def create(self, other):
+        """
+        we defined create, a CRUD function, which we will override more specific
+        :param other: a type, either Student or Discipline
+        :return: -
+        """
         pass
 
     def retrieve(self):
+        """
+        we defined retrieve, a CRUD function, which we will override more specific
+        :param other: a type, either Student or Discipline
+        :return: -
+        """
         pass
 
     def update(self, other):
+        """
+        we defined update, a CRUD function, which we will override more specific
+        :param other: a type, either Student or Discipline
+        :return: -
+        """
         pass
 
     def delete(self, other):
+        """
+        we defined delete, a CRUD function, which we will override more specific
+        :param other: a type, either Student or Discipline
+        :return: -
+        """
         pass
 
     def set_new(self, other):
@@ -70,14 +91,32 @@ class StudentRepository(Repository):
             self.students = default_students[:]
 
     def create(self, student):
+        """
+        the function defined in the Repository class, we have overridden it here especially for the StudentRepository class
+        - it will first check if the student is already existing, if not a new student will be added
+        :param student: a student of type Student
+        :return: -
+        :raises: ValidError as string: - "already existing student with same id!", if the value is already existing
+        """
         if student in self.students:
             raise ValidError("already existing student with same id!")
         self.students.append(student)
 
     def retrieve(self):
+        """
+        the function defined in the Repository class, we have overridden it here especially for the StudentRepository class
+        :param student: a student of type Student
+        :return: a deepcopy of the lists of students
+        """
         return copy.deepcopy(self.students)
 
     def update(self, updated_student):
+        """
+        the function defined in the Repository class, we have overridden it here especially for the StudentRepository class
+        - first we find the index on with updated student is
+        :param updated_student: a student of type Student, with the ID and new name
+        :return: a deepcopy of the lists of students
+        """
         stud_index = None
         for index, stud in enumerate(self.students):
             if stud == updated_student:
@@ -115,7 +154,7 @@ class StudentRepository(Repository):
         students = []
         for stud in self.students:
             to_cmp = stud.get_name()
-            if to_cmp.lower() == name.lower() and to_cmp.upper() == name.upper():
+            if name.lower() in to_cmp.lower():
                 students.append(stud)
         if not students:
             raise ValidError("student name not found!")
@@ -169,7 +208,7 @@ class DisciplineRepository(Repository):
         disciplines = []
         for discip in self.disciplines:
             name_cmp = discip.get_name()
-            if name_cmp.lower() == name.lower() and name_cmp.upper() == name.upper():
+            if name.lower() in name_cmp.lower():
                 disciplines.append(discip)
         if not disciplines:
             raise ValidError("discipline name not found!")
@@ -188,7 +227,7 @@ class GradeRepository(Repository):
     def initial_grades_list(self, disciplines, students) -> [Grade]:
         for j in range(21):
             for _ in range(3):
-                discipline_id = disciplines[random.randint(1, 20)].get_discipline_id()
+                discipline_id = disciplines[random.randint(1, len(disciplines)-1)].get_discipline_id()
                 student_id = students[j].get_student_id()
                 value_grade = random.randint(1, 10)
                 grade = Grade(discipline_id, student_id, value_grade)

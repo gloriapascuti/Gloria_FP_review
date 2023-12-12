@@ -3,6 +3,7 @@ import unittest
 from domain.model import Student, Discipline, Grade
 from errors.exceptions import ValidError
 from repository.repo import StudentRepository, DisciplineRepository, GradeRepository
+from services.service import Service
 from services.validate import ValidationService
 
 default_students = [
@@ -81,9 +82,6 @@ class TestStudentRepository(unittest.TestCase):
         repo = StudentRepository(default_students)
         repo.create(Student(502, "John"))
         students = repo.retrieve()
-        print("------------------")
-        print(students)
-
         self.assertEqual(len(students), 6)
         self.assertEqual(Student(502, "John"), students[-1])
 
@@ -194,6 +192,97 @@ class TestGradeRepository(unittest.TestCase):
         self.assertEqual(result[0].get_student_id(), 1)
         self.assertEqual(result[0].get_discipline_id(), 1)
         self.assertEqual(result[1].get_grade_value(), 9)
+
+
+class TestService(unittest.TestCase):
+
+    def test_create_grade(self):
+        repo_student = StudentRepository(default_students)
+        repo_discipline = DisciplineRepository(default_disciplines)
+        repo_grade = GradeRepository(default_grades)
+        validator = ValidationService()
+        service = Service(repo_student, repo_discipline, repo_grade, validator)
+        service.create_grade(4, 5, 9)
+        grades = service.repo_grade.retrieve()
+        added_grade = grades[-1]
+        self.assertEqual(len(grades), 17)
+
+    def test_delete_grade_if_student_deleted(self):
+        repo_student = StudentRepository(default_students)
+        repo_discipline = DisciplineRepository(default_disciplines)
+        repo_grade = GradeRepository(default_grades)
+        validator = ValidationService()
+        service = Service(repo_student, repo_discipline, repo_grade, validator)
+        repo_student.delete(2)
+        grades = repo_grade.retrieve()
+        # print(grades)
+        # self.assertEqual(grades[-1].get_student_id(), 4)
+        # self.assertEqual(grades[-1].get_discipline_id(), 4)
+        # self.assertEqual(grades[-1].get_grade_value(), 9)
+
+    def test_delete_grades_if_discipline_deleted(self):
+        repo_student = StudentRepository(default_students)
+        repo_discipline = DisciplineRepository(default_disciplines)
+        repo_grade = GradeRepository(default_grades)
+        validator = ValidationService()
+        service = Service(repo_student, repo_discipline, repo_grade, validator)
+        repo_discipline.delete(4)
+        grades = repo_grade.retrieve()
+        # self.assertEqual(grades[-1].get_discipline_id(), 3)
+        # self.assertEqual(grades[-1].get_student_id(), 2)
+        # self.assertEqual(grades[-1].get_grade_value(), 6)
+
+    def test_get_student_discipline_average_pairs(self):
+        repo_student = StudentRepository(default_students)
+        repo_discipline = DisciplineRepository(default_disciplines)
+        repo_grade = GradeRepository(default_grades)
+        validator = ValidationService()
+        service = Service(repo_student, repo_discipline, repo_grade, validator)
+        pairs = service.get_student_discipline_average_pairs()
+        pair = pairs[0]
+        self.assertEqual(pair[0].get_student_id(), 1)
+        self.assertEqual(pair[0].get_name(), "Dan")
+        self.assertEqual(pair[1].get_discipline_id(), 1)
+        self.assertEqual(pair[1].get_name(), "Mate")
+        self.assertEqual(pair[2], 7.5)
+
+    def test_desc_stud(self):
+        repo_student = StudentRepository(default_students)
+        repo_discipline = DisciplineRepository(default_disciplines)
+        repo_grade = GradeRepository(default_grades)
+        validator = ValidationService()
+        service = Service(repo_student, repo_discipline, repo_grade, validator)
+        stud = service.desc_stud()
+        pair = stud[0]
+        self.assertEqual(pair[1], 8.5)
+        self.assertEqual(pair[0].get_student_id(), 1)
+        self.assertEqual(pair[0].get_name(), "Dan")
+
+    def test_failing_students(self):
+        repo_student = StudentRepository(default_students)
+        repo_discipline = DisciplineRepository(default_disciplines)
+        repo_grade = GradeRepository(default_grades)
+        validator = ValidationService()
+        service = Service(repo_student, repo_discipline, repo_grade, validator)
+        students_failing = service.failing_students()
+        self.assertEqual(students_failing[0].get_name(), "Maria")
+        self.assertEqual(students_failing[0].get_student_id(), 2)
+
+    def test_desc_disciplines(self):
+        repo_student = StudentRepository(default_students)
+        repo_discipline = DisciplineRepository(default_disciplines)
+        repo_grade = GradeRepository(default_grades)
+        validator = ValidationService()
+        service = Service(repo_student, repo_discipline, repo_grade, validator)
+        desc_disciplines = service.desc_disciplines()
+        discip = desc_disciplines[0]
+        self.assertEqual(discip[0].get_name(), "Romana")
+        self.assertEqual(discip[0].get_discipline_id(), 2)
+        self.assertEqual(discip[1], 9.5)
+
+
+
+
 
 
 if __name__ == "__main__":

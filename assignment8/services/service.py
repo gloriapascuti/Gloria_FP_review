@@ -14,7 +14,8 @@ class Service:
         self.validator = validator
         self.repo_discipline = repo_discipline
         self.repo_grade = repo_grade
-        self.repo_grade.initial_grades_list(self.repo_discipline.retrieve(), self.repo_student.retrieve())
+        if not self.repo_grade.retrieve():
+            self.repo_grade.initial_grades_list(self.repo_discipline.retrieve(), self.repo_student.retrieve())
 
     def create_student(self, id, name):
         student = Student(id, name)
@@ -92,25 +93,25 @@ class Service:
             else:
                 i += 1
 
-    def get_average(self, student_id):
-        grades = self.repo_grade.retrieve()
-        counter = 0
-        average = 0
-        for grade in grades:
-            if grade.get_student_id() == student_id:
-                counter += 1
-                average += grade.get_grade_value()
-        return average // counter
-
-    def get_average_discipline(self, discipline_id):
-        grades = self.repo_grade.retrieve()
-        counter = 0
-        average = 0
-        for grade in grades:
-            if grade.get_discipline_id() == discipline_id:
-                counter += 1
-                average += grade.get_grade_value()
-        return average // counter
+    # def get_average(self, student_id):
+    #     grades = self.repo_grade.retrieve()
+    #     counter = 0
+    #     average = 0
+    #     for grade in grades:
+    #         if grade.get_student_id() == student_id:
+    #             counter += 1
+    #             average += grade.get_grade_value()
+    #     return average // counter
+    #
+    # def get_average_discipline(self, discipline_id):
+    #     grades = self.repo_grade.retrieve()
+    #     counter = 0
+    #     average = 0
+    #     for grade in grades:
+    #         if grade.get_discipline_id() == discipline_id:
+    #             counter += 1
+    #             average += grade.get_grade_value()
+    #     return average // counter
 
     def get_student_discipline_average_pairs(self):
         pairs = []
@@ -128,7 +129,9 @@ class Service:
         student_average_pair = []
         pairs = self.get_student_discipline_average_pairs()
         for student in self.repo_student.retrieve():
-            student_averages = filter(lambda pair: pair[0] == student, pairs)
+            student_averages = list(filter(lambda pair: pair[0] == student, pairs))
+            if len(student_averages)<1:
+                continue
             overall_average = statistics.mean(map(lambda pair: pair[2], student_averages))
             if overall_average >= 5:
                 student_average_pair.append([student, overall_average])
@@ -136,8 +139,8 @@ class Service:
 
     def failing_students(self):
         student_failing_pair = []
-        print(self.get_student_discipline_average_pairs())
-        print()
+        # print(self.get_student_discipline_average_pairs())
+        # print()
         for student, _, average in self.get_student_discipline_average_pairs():
             if average < 5 and student not in student_failing_pair:
                 student_failing_pair.append(student)
